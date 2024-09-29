@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { PropsWithChildren } from 'react';
 import { Inter } from 'next/font/google';
+import { PropsWithChildren } from 'react';
 
 import { cn } from '@/utils/html';
 
