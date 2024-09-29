@@ -1,0 +1,52 @@
+{
+  "name": "blink-frontend",
+  "version": "0.1.0",
+  "private": false,
+  "packageManager": "pnpm@9.9.0",
+  "scripts": {
+    "dev": "next dev --turbo",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint --ext 'js,jsx,ts,tsx' --cache --no-error-on-unmatched-pattern --fix",
+    "style": "prettier --log-level warn --ignore-unknown --no-error-on-unmatched-pattern --cache",
+    "style:check": "pnpm style --check",
+    "style:format": "pnpm style --write",
+    "types:check": "tsc --noEmit",
+    "deps:prepare": "npm --prefix ../blink-backend run deps:up && npm --prefix ../blink-backend run migration:apply",
+    "deps:up": "npm --prefix ../blink-backend run deps:up && npm --prefix ../blink-backend run dev",
+    "pre:commit": "lint-staged",
+    "pre:push": "concurrently --names style,types,link 'pnpm style:check .' 'pnpm types:check' 'pnpm lint --max-warnings 0 .'",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "next": "14.2.13",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.4",
+    "@types/react": "^18.3.10",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.7.0",
+    "@typescript-eslint/parser": "^8.7.0",
+    "concurrently": "^9.0.1",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "14.2.13",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-turbo": "^2.1.2",
+    "eslint-import-resolver-typescript": "^3.6.3",
+    "eslint-plugin-import": "^2.30.0",
+    "eslint-plugin-import-helpers": "^1.3.1",
+    "eslint-plugin-jsx-a11y": "^6.10.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.37.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "postcss": "^8.4.47",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.6.2"
+  }
+}
