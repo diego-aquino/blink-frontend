@@ -5,6 +5,7 @@ import { PropsWithChildren } from 'react';
 import { cn } from '@/utils/html';
 
 import '@/styles/global.css';
+import RootProviders from './RootProviders';
 
 const interFont = Inter({
   subsets: ['latin'],
@@ -19,7 +20,9 @@ export const metadata: Metadata = {
 function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="pt-BR">
-      <body className={cn('antialiased', interFont.className)}>{children}</body>
+      <body className={cn('bg-slate-100 text-slate-800 antialiased', interFont.className)}>
+        <RootProviders>{children}</RootProviders>
+      </body>
     </html>
   );
 }
