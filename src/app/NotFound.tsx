@@ -1,7 +1,7 @@
 import Redirect from '@/components/common/Redirect';
 
-function HomePage() {
+function NotFound() {
   return <Redirect to="sign-in" />;
 }
 
-export default HomePage;
+export default NotFound;
