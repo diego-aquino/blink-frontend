@@ -12,6 +12,7 @@
     "style:check": "pnpm style --check",
     "style:format": "pnpm style --write",
     "types:check": "tsc --noEmit",
+    "typegen": "dotenv -c development -- bash -c 'zimic typegen openapi $NEXT_PUBLIC_BACKEND_OPENAPI_URL -o src/types/backend/generated.ts -s Blink'",
     "deps:prepare": "npm --prefix ../blink-backend run deps:up && npm --prefix ../blink-backend run migration:apply",
     "deps:up": "npm --prefix ../blink-backend run deps:up && npm --prefix ../blink-backend run dev",
     "pre:commit": "lint-staged",
@@ -36,6 +37,7 @@
     "@typescript-eslint/eslint-plugin": "^8.7.0",
     "@typescript-eslint/parser": "^8.7.0",
     "concurrently": "^9.0.1",
+    "dotenv-cli": "^7.4.2",
     "eslint": "^8.57.1",
     "eslint-config-next": "14.2.13",
     "eslint-config-prettier": "^9.1.0",
@@ -53,6 +55,7 @@
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.8",
     "tailwindcss": "^3.4.13",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.2",
+    "zimic": "^0.9.1"
   }
 }

@@ -20,7 +20,9 @@ export const metadata: Metadata = {
 function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="pt-BR">
-      <body className={cn('bg-slate-100 text-slate-800 antialiased', interFont.className)}>
+      <body
+        className={cn('flex h-full min-h-screen flex-col bg-slate-100 text-slate-800 antialiased', interFont.className)}
+      >
         <RootProviders>{children}</RootProviders>
       </body>
     </html>
