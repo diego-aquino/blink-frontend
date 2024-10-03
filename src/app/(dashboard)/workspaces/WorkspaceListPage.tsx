@@ -1,6 +1,5 @@
 'use client';
 
-import withAuth from '@/components/auth/withAuth';
 import useWorkspaces from '@/hooks/workspaces/useWorkspaces';
 
 import WorkspaceItem from './WorkspaceItem';
@@ -26,4 +25,4 @@ function WorkspaceListPage() {
   );
 }
 
-export default withAuth(WorkspaceListPage);
+export default WorkspaceListPage;

@@ -1,11 +1,15 @@
+'use client';
+
 import Link from 'next/link';
 import { PropsWithChildren } from 'react';
+
+import withAuth from '@/components/auth/withAuth';
 
 type Props = PropsWithChildren;
 
 function DashboardLayout({ children }: Props) {
   return (
-    <div className="">
+    <div>
       <header className="bg-white p-4 shadow-md">
         <Link href="/workspaces">
           <h1 className="text-2xl font-medium">Blink</h1>
@@ -17,4 +21,4 @@ function DashboardLayout({ children }: Props) {
   );
 }
 
-export default DashboardLayout;
+export default withAuth(DashboardLayout);
