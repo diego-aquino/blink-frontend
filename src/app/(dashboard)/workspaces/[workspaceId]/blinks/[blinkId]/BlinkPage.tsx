@@ -1,5 +1,7 @@
+import withAuth from '@/components/auth/withAuth';
+
 function BlinkPage() {
   return <div>Blink</div>;
 }
 
-export default BlinkPage;
+export default withAuth(BlinkPage);

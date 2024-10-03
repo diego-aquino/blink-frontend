@@ -3,6 +3,7 @@ import axios from 'axios';
 import environment from '@/config/environment';
 
 import AuthClient from './auth/AuthClient';
+import UserClient from './users/UserClient';
 import WorkspaceClient from './workspaces/WorkspaceClient';
 
 class BackendClient {
@@ -12,10 +13,12 @@ class BackendClient {
   });
 
   auth: AuthClient;
+  users: UserClient;
   workspaces: WorkspaceClient;
 
   constructor() {
     this.auth = new AuthClient(this.http);
+    this.users = new UserClient(this.http);
     this.workspaces = new WorkspaceClient(this.http);
   }
 }

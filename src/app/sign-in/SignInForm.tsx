@@ -8,7 +8,7 @@ import { z } from 'zod';
 
 import Button from '@/components/common/Button';
 import Input from '@/components/form/Input';
-import useApi from '@/hooks/useApi';
+import useAPI from '@/hooks/useAPI';
 
 const formSchema = z.object({
   email: z.string().min(1, 'Obrigatório').email('Email inválido'),
@@ -18,7 +18,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 function SignInForm() {
-  const api = useApi();
+  const api = useAPI();
   const router = useRouter();
 
   const form = useForm<FormValues>({

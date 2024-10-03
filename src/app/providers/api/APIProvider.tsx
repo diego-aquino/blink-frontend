@@ -2,21 +2,21 @@ import { PropsWithChildren, useMemo } from 'react';
 
 import BackendClient from '@/clients/backend/BackendClient';
 
-import ApiContext, { ApiContextValue } from './ApiContext';
+import APIContext, { APIContextValue } from './APIContext';
 
 type Props = PropsWithChildren;
 
-function ApiProvider({ children }: Props) {
+function APIProvider({ children }: Props) {
   const backendClient = useMemo(() => new BackendClient(), []);
 
-  const api = useMemo<ApiContextValue>(
+  const api = useMemo<APIContextValue>(
     () => ({
       backend: backendClient,
     }),
     [backendClient],
   );
 
-  return <ApiContext.Provider value={api}>{children}</ApiContext.Provider>;
+  return <APIContext.Provider value={api}>{children}</APIContext.Provider>;
 }
 
-export default ApiProvider;
+export default APIProvider;

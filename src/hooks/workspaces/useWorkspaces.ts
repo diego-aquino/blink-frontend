@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { Workspace, WorkspaceListResult } from '@/clients/backend/workspaces/WorkspaceClient';
 
-import useApi from '../useApi';
+import useAPI from '../useAPI';
 
 export const workspacesKey = {
   all() {
@@ -17,14 +17,14 @@ export const workspacesKey = {
 const EMPTY_WORKSPACE_LIST_RESULT: WorkspaceListResult = { workspaces: [], total: 0 };
 
 function useWorkspaces() {
-  const api = useApi();
+  const api = useAPI();
 
   const {
     data: { workspaces, total } = EMPTY_WORKSPACE_LIST_RESULT,
     isLoading,
     isSuccess,
     isError,
-  } = useQuery({
+  } = useQuery<WorkspaceListResult>({
     queryKey: workspacesKey.all(),
     queryFn: () => api.backend.workspaces.list(),
   });

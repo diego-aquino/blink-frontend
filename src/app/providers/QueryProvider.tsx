@@ -4,17 +4,21 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { PropsWithChildren, useCallback, useMemo } from 'react';
 
-import { isUnauthenticatedResponse } from '@/clients/http';
+import AuthClient from '@/clients/backend/auth/AuthClient';
 
-const DEFAULT_RETRY_COUNT = 3;
+export const DEFAULT_RETRY_COUNT = 3;
 
 type Props = PropsWithChildren;
 
 function QueryProvider({ children }: Props) {
   const defaultQueryRetry = useCallback((failureCount: number, error: unknown) => {
-    if (error instanceof AxiosError && error.response && isUnauthenticatedResponse(error.response)) {
+    const isKnownError =
+      error instanceof AxiosError && error.response && AuthClient.isUnauthenticatedResponse(error.response);
+
+    if (isKnownError) {
       return false;
     }
+
     return failureCount < DEFAULT_RETRY_COUNT;
   }, []);
 

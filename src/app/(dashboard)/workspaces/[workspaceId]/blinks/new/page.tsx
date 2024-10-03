@@ -1,3 +1,5 @@
+import withAuth from '@/components/auth/withAuth';
+
 import CreateBlinkPage from './CreateBlinkPage';
 
-export default CreateBlinkPage;
+export default withAuth(CreateBlinkPage);

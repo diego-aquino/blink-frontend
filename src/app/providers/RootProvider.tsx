@@ -2,15 +2,18 @@
 
 import { PropsWithChildren } from 'react';
 
-import ApiProvider from './api/ApiProvider';
+import APIProvider from './api/APIProvider';
 import QueryProvider from './QueryProvider';
+import SessionProvider from './session/SessionProvider';
 
 type Props = PropsWithChildren;
 
 function RootProvider({ children }: Props) {
   return (
     <QueryProvider>
-      <ApiProvider>{children}</ApiProvider>
+      <APIProvider>
+        <SessionProvider>{children}</SessionProvider>
+      </APIProvider>
     </QueryProvider>
   );
 }
