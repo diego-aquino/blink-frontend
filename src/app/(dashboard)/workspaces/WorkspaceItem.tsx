@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { Workspace } from '@/types/backend/workspaces';
+import { Workspace } from '@/clients/backend/workspaces/WorkspaceClient';
 
 interface Props {
   workspace: Workspace;

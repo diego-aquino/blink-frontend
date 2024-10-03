@@ -1,10 +1,8 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 
-import http from '@/clients/http';
-import { WorkspaceGetResult } from '@/types/backend/workspaces';
+import useWorkspace from '@/hooks/workspaces/useWorkspace';
 
 interface PageParams extends Record<string, string | string[]> {
   workspaceId: string;
@@ -12,30 +10,17 @@ interface PageParams extends Record<string, string | string[]> {
 
 function WorkspacePage() {
   const { workspaceId } = useParams<PageParams>();
-
-  const {
-    data: workspace = null,
-    isLoading: isLoadingWorkspace,
-    isError: isErrorWorkspace,
-    isSuccess: isSuccessWorkspace,
-  } = useQuery({
-    queryKey: ['workspaces', workspaceId],
-    async queryFn() {
-      const response = await http.backend.get<WorkspaceGetResult>(`/workspaces/${workspaceId}`);
-      return response.data;
-    },
-  });
+  const workspace = useWorkspace(workspaceId);
 
   return (
     <main>
-      {isLoadingWorkspace && <p>Carregando...</p>}
-      {isErrorWorkspace && <p>Não foi possível carregar a área de trabalho.</p>}
+      {workspace.isLoading && <p>Carregando...</p>}
+      {workspace.isError && <p>Não foi possível carregar a área de trabalho.</p>}
 
-      {isSuccessWorkspace && workspace && (
+      {workspace.isSuccess && workspace.value && (
         <>
-          <h2 className="text-xl font-medium">{workspace.name}</h2>
-
-          <p>Criado em: {new Date(workspace.createdAt).toLocaleString()}</p>
+          <h2 className="text-xl font-medium">{workspace.value.name}</h2>
+          <p>Criado em: {new Date(workspace.value.createdAt).toLocaleString()}</p>
         </>
       )}
     </main>

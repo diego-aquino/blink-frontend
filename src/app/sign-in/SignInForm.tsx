@@ -6,9 +6,9 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import http from '@/clients/http';
 import Button from '@/components/common/Button';
 import Input from '@/components/form/Input';
+import useApi from '@/hooks/useApi';
 
 const formSchema = z.object({
   email: z.string().min(1, 'Obrigatório').email('Email inválido'),
@@ -18,6 +18,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 function SignInForm() {
+  const api = useApi();
   const router = useRouter();
 
   const form = useForm<FormValues>({
@@ -26,7 +27,7 @@ function SignInForm() {
 
   const submitLogin = useMutation({
     async mutationFn(values: FormValues) {
-      await http.backend.post('/auth/login', {
+      await api.backend.auth.login({
         email: values.email,
         password: values.password,
       });
