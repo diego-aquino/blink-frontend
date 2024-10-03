@@ -1,6 +1,6 @@
 import { ComponentProps } from 'react';
 
-import SpinnerIcon from '@/icons/common/SpinnerIcon';
+import SpinnerIcon from '@/components/icons/common/SpinnerIcon';
 import { cn } from '@/utils/html';
 
 interface Props extends ComponentProps<'button'> {

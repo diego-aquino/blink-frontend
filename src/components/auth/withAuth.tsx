@@ -1,9 +1,11 @@
+import { PropsWithChildren } from 'react';
+
 import Redirect from '@/components/common/Redirect';
 import useSession from '@/hooks/session/useSession';
 
 import PageLoading from '../common/PageLoading';
 
-function withAuth<Props extends JSX.IntrinsicAttributes>(Component: (props: Props) => JSX.Element) {
+function withAuth<Props extends JSX.IntrinsicAttributes | PropsWithChildren>(Component: (props: Props) => JSX.Element) {
   return function WrappedComponent(props: Props) {
     const session = useSession();
 

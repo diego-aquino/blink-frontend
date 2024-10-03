@@ -38,7 +38,7 @@ function useMe({ maxRetries = DEFAULT_RETRY_COUNT }: Options = {}) {
   }, [queryClient]);
 
   const clear = useCallback(() => {
-    queryClient.removeQueries({ queryKey: meKey.all() });
+    queryClient.setQueryData(meKey.all(), undefined);
   }, [queryClient]);
 
   return {

@@ -3,12 +3,14 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import Button from '@/components/common/Button';
+import PageLoading from '@/components/common/PageLoading';
 import Input from '@/components/form/Input';
-import useAPI from '@/hooks/useAPI';
+import useSession from '@/hooks/session/useSession';
 
 const formSchema = z.object({
   email: z.string().min(1, 'Obrigatório').email('Email inválido'),
@@ -18,7 +20,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 function SignInForm() {
-  const api = useAPI();
+  const session = useSession();
   const router = useRouter();
 
   const form = useForm<FormValues>({
@@ -27,7 +29,7 @@ function SignInForm() {
 
   const submitLogin = useMutation({
     async mutationFn(values: FormValues) {
-      await api.backend.auth.login({
+      await session.login({
         email: values.email,
         password: values.password,
       });
@@ -38,12 +40,24 @@ function SignInForm() {
     },
   });
 
+  useEffect(() => {
+    if (!session.isLoading && session.user !== null) {
+      router.push('/workspaces');
+    }
+  }, [router, session.isLoading, session.user]);
+
+  if (session.isLoading || session.user !== null) {
+    return <PageLoading />;
+  }
+
   return (
     <form
       noValidate
       onSubmit={form.handleSubmit((values) => submitLogin.mutateAsync(values))}
       className="flex min-w-72 flex-col space-y-6"
     >
+      <h1 className="text-center text-3xl font-medium">Blink</h1>
+
       <div className="space-y-3">
         <Input
           {...form.register('email')}
