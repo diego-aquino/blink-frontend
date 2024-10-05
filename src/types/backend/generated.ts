@@ -153,6 +153,8 @@ export interface BlinkComponents {
       url: string;
       /** @description O id do redirecionamento */
       redirectId: string;
+      /** @description O id do workspace */
+      workspaceId: string;
       creator?: BlinkComponents['schemas']['User'];
       /**
        * Format: date-time
@@ -252,6 +254,10 @@ export interface BlinkOperations {
       /** @description Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
+      };
+      /** @description Usuário não encontrado */
+      404: {
+        body: BlinkComponents['schemas']['NotFoundError'];
       };
       /** @description Erro no servidor */
       500: {

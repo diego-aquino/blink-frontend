@@ -12,9 +12,9 @@ function Button({ loading = false, disabled = false, className, children, ...res
     <button
       type="button"
       className={cn(
-        'relative rounded bg-indigo-400 px-2 py-1.5 text-center font-medium text-white outline-none transition-all',
+        'relative rounded-lg bg-indigo-400 px-2 py-1.5 text-center font-medium text-white outline-none transition-all',
         loading && 'cursor-progress bg-opacity-85 text-opacity-40',
-        !(loading || disabled) && 'hover:bg-indigo-500 focus:ring-2 focus:ring-indigo-200',
+        !(loading || disabled) && 'hover:bg-indigo-500 focus:ring-2 focus:ring-indigo-200 active:bg-indigo-600',
         className,
       )}
       disabled={disabled || loading}

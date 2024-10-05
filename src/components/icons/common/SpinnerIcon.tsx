@@ -5,8 +5,8 @@ import { cn } from '@/utils/html';
 
 type Props = SVGAttributes<SVGSVGElement>;
 
-function SpinnerIcon({ className }: Props) {
-  return <BiLoaderAlt className={cn('animate-spin', className)} />;
+function SpinnerIcon({ className, ...rest }: Props) {
+  return <BiLoaderAlt className={cn('animate-spin', className)} {...rest} />;
 }
 
 export default SpinnerIcon;

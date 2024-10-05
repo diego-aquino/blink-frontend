@@ -2,28 +2,46 @@
 
 import { useParams } from 'next/navigation';
 
-import useWorkspace from '@/hooks/workspaces/useWorkspace';
+import SpinnerIcon from '@/components/icons/common/SpinnerIcon';
+import useBlinks from '@/hooks/workspaces/blinks/useBlinks';
 
-interface PageParams extends Record<string, string | string[]> {
+import DashboardContent from '../../layout/DashboardContent';
+import BlinkItem from './BlinkItem';
+
+export interface PageParams extends Record<string, string | string[]> {
   workspaceId: string;
 }
 
 function WorkspacePage() {
   const { workspaceId } = useParams<PageParams>();
-  const workspace = useWorkspace(workspaceId);
+  const blinks = useBlinks(workspaceId);
+
+  if (blinks.isLoading) {
+    return (
+      <div className="flex flex-1 items-center justify-center">
+        <SpinnerIcon className="h-7 w-7 text-indigo-400" />
+      </div>
+    );
+  }
 
   return (
-    <main>
-      {workspace.isLoading && <p>Carregando...</p>}
-      {workspace.isError && <p>Não foi possível carregar a área de trabalho.</p>}
+    <DashboardContent>
+      <main className="flex flex-1 flex-col space-y-4">
+        {blinks.isError && <p>Não foi possível carregar os blinks.</p>}
 
-      {workspace.isSuccess && workspace.value && (
-        <>
-          <h2 className="text-xl font-medium">{workspace.value.name}</h2>
-          <p>Criado em: {new Date(workspace.value.createdAt).toLocaleString()}</p>
-        </>
-      )}
-    </main>
+        {blinks.isSuccess && (
+          <>
+            <h3 className="text-2xl font-medium">Blinks</h3>
+
+            <ul className="space-y-1">
+              {blinks.list.map((blink) => (
+                <BlinkItem key={blink.id} blink={blink} />
+              ))}
+            </ul>
+          </>
+        )}
+      </main>
+    </DashboardContent>
   );
 }
 

@@ -1,23 +1,25 @@
 import { AxiosInstance } from 'axios';
 
-import { BlinkComponents, BlinkSchema } from '@/types/backend/generated';
-
-export type Workspace = BlinkComponents['schemas']['Workspace'];
-
-export type WorkspaceListResult = BlinkSchema['/workspaces']['GET']['response']['200']['body'];
-export type WorkspaceGetResult = BlinkSchema['/workspaces/:workspaceId']['GET']['response']['200']['body'];
+import BlinkClient from './blinks/BlinkClient';
+import { WorkspaceListResult, WorkspacePath, Workspace, WorkspaceGetResult } from './types';
 
 class WorkspaceClient {
-  constructor(private http: AxiosInstance) {}
+  blinks: BlinkClient;
+
+  constructor(private http: AxiosInstance) {
+    this.blinks = new BlinkClient(http);
+  }
 
   async list() {
-    const response = await this.http.get<WorkspaceListResult>('/workspaces');
+    const response = await this.http.get<WorkspaceListResult>('/workspaces' satisfies WorkspacePath);
     const workspacesResult = response.data;
     return workspacesResult;
   }
 
   async get(workspaceId: Workspace['id']) {
-    const response = await this.http.get<WorkspaceGetResult>(`/workspaces/${workspaceId}`);
+    const response = await this.http.get<WorkspaceGetResult>(
+      `/workspaces/${workspaceId}` satisfies WorkspacePath.NonLiteral,
+    );
     const workspace = response.data;
     return workspace;
   }

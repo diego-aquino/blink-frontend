@@ -1,4 +1,4 @@
-import SessionContext from '@/app/providers/session/SessionContext';
+import SessionContext from '@/providers/session/SessionContext';
 import { useStrictContext } from '@/utils/react';
 
 function useSession() {

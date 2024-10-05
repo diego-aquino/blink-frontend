@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { Workspace, WorkspaceListResult } from '@/clients/backend/workspaces/WorkspaceClient';
+import { Workspace, WorkspaceListResult } from '@/clients/backend/workspaces/types';
 
 import useAPI from '../useAPI';
 
@@ -9,7 +9,7 @@ export const workspacesKey = {
     return ['workspaces'] as const;
   },
 
-  byId(workspaceId: Workspace['id']) {
+  byId(workspaceId: Workspace['id'] | undefined) {
     return [...this.all(), workspaceId] as const;
   },
 };

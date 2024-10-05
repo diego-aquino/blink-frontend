@@ -1,4 +1,4 @@
-import APIContext from '@/app/providers/api/APIContext';
+import APIContext from '@/providers/api/APIContext';
 import { useStrictContext } from '@/utils/react';
 
 function useAPI() {

@@ -5,7 +5,7 @@ import { PropsWithChildren } from 'react';
 import { cn } from '@/utils/html';
 
 import '@/styles/global.css';
-import RootProvider from './providers/RootProvider';
+import RootProvider from '../providers/RootProvider';
 
 const interFont = Inter({
   subsets: ['latin'],
