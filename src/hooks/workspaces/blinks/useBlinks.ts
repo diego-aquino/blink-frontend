@@ -16,7 +16,7 @@ export const blinksKey = {
 
 const EMPTY_BLINK_LIST_RESULT: BlinkListResult = { blinks: [], total: 0 };
 
-function useBlinks(workspaceId: Workspace['id']) {
+function useBlinks(workspaceId: Workspace['id'] | undefined) {
   const api = useAPI();
 
   const {
@@ -24,9 +24,10 @@ function useBlinks(workspaceId: Workspace['id']) {
     isLoading,
     isSuccess,
     isError,
-  } = useQuery<BlinkListResult>({
+  } = useQuery<BlinkListResult | undefined>({
     queryKey: blinksKey.all(),
-    queryFn: () => api.backend.workspaces.blinks.listByWorkspace(workspaceId),
+    queryFn: () => (workspaceId ? api.backend.workspaces.blinks.list(workspaceId) : undefined),
+    enabled: workspaceId !== undefined,
   });
 
   return {

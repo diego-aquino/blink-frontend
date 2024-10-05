@@ -1,3 +1,3 @@
-import WorkspacePage from './WorkspacePage';
+import WorkspaceBlinksPage from './WorkspaceBlinksPage';
 
-export default WorkspacePage;
+export default WorkspaceBlinksPage;

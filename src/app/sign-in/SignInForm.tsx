@@ -13,8 +13,8 @@ import Input from '@/components/form/Input';
 import useSession from '@/hooks/session/useSession';
 
 const formSchema = z.object({
-  email: z.string().min(1, 'Obrigatório').email('Email inválido'),
-  password: z.string().min(1, 'Obrigatório'),
+  email: z.string().trim().min(1, 'Obrigatório').email('Email inválido'),
+  password: z.string().trim().min(1, 'Obrigatório'),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -63,6 +63,7 @@ function SignInForm() {
           {...form.register('email')}
           label="E-mail"
           type="email"
+          placeholder="meu@email.com"
           errorMessage={form.formState.errors.email?.message}
         />
         <Input
@@ -73,7 +74,7 @@ function SignInForm() {
         />
       </div>
 
-      <Button type="submit" loading={form.formState.isSubmitting}>
+      <Button type="submit" loading={form.formState.isSubmitting || submitLogin.isPending}>
         Entrar
       </Button>
     </form>

@@ -4,17 +4,22 @@ import SpinnerIcon from '@/components/icons/common/SpinnerIcon';
 import { cn } from '@/utils/html';
 
 interface Props extends ComponentProps<'button'> {
+  variant?: 'primary' | 'secondary';
   loading?: boolean;
 }
 
-function Button({ loading = false, disabled = false, className, children, ...rest }: Props) {
+function Button({ variant = 'primary', loading = false, disabled = false, className, children, ...rest }: Props) {
   return (
     <button
       type="button"
       className={cn(
-        'relative rounded-lg bg-indigo-400 px-2 py-1.5 text-center font-medium text-white outline-none transition-all',
+        'relative rounded-lg px-4 py-1.5 text-center font-medium outline-none transition-all',
+        variant === 'primary' &&
+          cn('bg-indigo-500 text-white', !(loading || disabled) && 'hover:bg-indigo-600 active:bg-indigo-700'),
+        variant === 'secondary' &&
+          cn('bg-slate-100 text-slate-800', !(loading || disabled) && 'hover:bg-slate-200 active:bg-slate-300'),
         loading && 'cursor-progress bg-opacity-85 text-opacity-40',
-        !(loading || disabled) && 'hover:bg-indigo-500 focus:ring-2 focus:ring-indigo-200 active:bg-indigo-600',
+        !(loading || disabled) && 'focus:ring-2 focus:ring-indigo-200',
         className,
       )}
       disabled={disabled || loading}

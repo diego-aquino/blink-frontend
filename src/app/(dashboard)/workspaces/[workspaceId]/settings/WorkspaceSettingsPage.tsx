@@ -1,5 +1,7 @@
+import WorkspaceContentTitle from '../layout/WorkspaceContentTitle';
+
 function WorkspaceSettingsPage() {
-  return <div>Workspace Settings</div>;
+  return <WorkspaceContentTitle>Configurações</WorkspaceContentTitle>;
 }
 
 export default WorkspaceSettingsPage;
