@@ -22,15 +22,13 @@ function QueryProvider({ children }: Props) {
     return failureCount < DEFAULT_RETRY_COUNT;
   }, []);
 
-  const createQueryClient = useCallback(() => {
+  const queryClient = useMemo(() => {
     return new QueryClient({
       defaultOptions: {
         queries: { retry: defaultQueryRetry },
       },
     });
   }, [defaultQueryRetry]);
-
-  const queryClient = useMemo(() => createQueryClient(), [createQueryClient]);
 
   return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }

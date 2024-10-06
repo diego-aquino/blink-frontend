@@ -3,12 +3,10 @@ import { useRouter } from 'next/navigation';
 
 import { LoginCredentials } from '@/clients/backend/auth/AuthClient';
 import useSession from '@/hooks/session/useSession';
-import useMe from '@/providers/session/useMe';
 
 function useSignIn() {
   const session = useSession();
   const router = useRouter();
-  const me = useMe();
 
   const signInMutation = useMutation({
     async mutationFn(credentials: LoginCredentials) {
@@ -16,7 +14,6 @@ function useSignIn() {
     },
 
     onSuccess() {
-      void me.prefetch();
       router.push('/workspaces');
     },
   });

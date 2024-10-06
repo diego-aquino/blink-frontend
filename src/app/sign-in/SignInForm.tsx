@@ -10,8 +10,7 @@ import Button from '@/components/common/Button';
 import PageLoading from '@/components/common/PageLoading';
 import Input from '@/components/form/Input';
 import useSession from '@/hooks/session/useSession';
-
-import useSignIn from './hooks/useSignIn';
+import useSignIn from '@/hooks/session/useSignIn';
 
 const formSchema = z.object({
   email: z.string().trim().min(1, 'Obrigatório').email('Email inválido'),
@@ -60,6 +59,7 @@ function SignInForm() {
           {...form.register('password')}
           label="Senha"
           type="password"
+          placeholder="********"
           errorMessage={form.formState.errors.password?.message}
         />
       </div>

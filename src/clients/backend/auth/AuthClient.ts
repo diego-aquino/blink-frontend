@@ -23,6 +23,10 @@ class AuthClient {
     await this.http.post('/auth/login', credentials);
   }
 
+  async logout() {
+    await this.http.post('/auth/logout');
+  }
+
   private addAuthInterceptors(http: AxiosInstance) {
     http.interceptors.response.use(
       (response) => response,

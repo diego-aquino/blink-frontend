@@ -1,3 +1,5 @@
+'use client';
+
 import { PropsWithChildren, useMemo } from 'react';
 
 import BackendClient from '@/clients/backend/BackendClient';

@@ -3,7 +3,7 @@
 import { PropsWithChildren } from 'react';
 
 import APIProvider from './api/APIProvider';
-import QueryProvider from './QueryProvider';
+import QueryProvider from './query/QueryProvider';
 import SessionProvider from './session/SessionProvider';
 
 type Props = PropsWithChildren;

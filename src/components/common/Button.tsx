@@ -13,7 +13,7 @@ function Button({ variant = 'primary', loading = false, disabled = false, classN
     <button
       type="button"
       className={cn(
-        'relative flex items-center justify-center space-x-2 rounded-lg py-1.5 text-center font-medium outline-none transition-all',
+        'relative flex items-center justify-center rounded-lg py-1.5 text-center font-medium outline-none transition-all',
         !/\bpx-[^ ]+/.test(className) && 'px-4',
 
         variant === 'primary' &&
@@ -31,7 +31,7 @@ function Button({ variant = 'primary', loading = false, disabled = false, classN
       disabled={disabled || loading}
       {...rest}
     >
-      {children}
+      <div className="space-x-2">{children}</div>
 
       {loading && (
         <div className="absolute inset-0 flex items-center justify-center">

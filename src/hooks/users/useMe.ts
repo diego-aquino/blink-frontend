@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { User } from '@/clients/backend/users/UserClient';
 import useAPI from '@/hooks/useAPI';
 
-import { DEFAULT_RETRY_COUNT } from '../QueryProvider';
+import { DEFAULT_RETRY_COUNT } from '../../providers/query/QueryProvider';
 
 export const meKey = {
   all() {
@@ -23,37 +23,28 @@ function useMe(
   const api = useAPI();
   const queryClient = useQueryClient();
 
-  const queryFn = useCallback(() => {
-    return api.backend.users.me();
-  }, [api.backend.users]);
-
   const {
-    data: user,
+    data: user = null,
     isLoading,
     isSuccess,
     isError,
-  } = useQuery<User>({
+  } = useQuery<User | null>({
     queryKey: meKey.all(),
-    queryFn,
+    queryFn() {
+      return api.backend.users.me();
+    },
     retry(failureCount) {
       return failureCount < maxRetries;
     },
     enabled: enableFetch,
   });
 
-  const prefetch = useCallback(async () => {
-    await queryClient.prefetchQuery({
-      queryKey: meKey.all(),
-      queryFn,
-    });
-  }, [queryClient, queryFn]);
-
   const invalidate = useCallback(async () => {
     await queryClient.invalidateQueries({ queryKey: meKey.all() });
   }, [queryClient]);
 
   const clear = useCallback(() => {
-    queryClient.setQueryData(meKey.all(), undefined);
+    queryClient.setQueryData(meKey.all(), null);
   }, [queryClient]);
 
   return {
@@ -61,7 +52,6 @@ function useMe(
     isLoading,
     isSuccess,
     isError,
-    prefetch,
     invalidate,
     clear,
   };

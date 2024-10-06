@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext } from 'react';
 
 import { LoginCredentials } from '@/clients/backend/auth/AuthClient';
@@ -7,6 +9,7 @@ export interface SessionContextValue {
   user: User | null;
   isLoading: boolean;
   login: (credentials: LoginCredentials) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 const SessionContext = createContext<SessionContextValue | undefined>(undefined);
