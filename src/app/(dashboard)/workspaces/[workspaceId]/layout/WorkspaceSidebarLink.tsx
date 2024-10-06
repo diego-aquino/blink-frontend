@@ -13,13 +13,13 @@ import useWorkspaceParams from '../hooks/useWorkspaceParams';
 import { WorkspaceTab } from './WorkspaceLayout';
 
 const ICONS_BY_TAB: Record<WorkspaceTab, ReactNode> = {
-  blinks: <LinkIcon className="h-5 w-5" />,
+  links: <LinkIcon className="h-5 w-5" />,
   members: <UsersIcon className="h-5 w-5" />,
   settings: <GearIcon className="h-5 w-5" />,
 };
 
 const LABELS_BY_TAB: Record<WorkspaceTab, string> = {
-  blinks: 'Blinks',
+  links: 'Links',
   members: 'Membros',
   settings: 'Configurações',
 };
@@ -34,10 +34,10 @@ function WorkspaceSidebarLink({ tab }: Props) {
 
   const isSelected =
     pathname.startsWith(`/workspaces/${workspaceId}/${tab}`) ||
-    (tab === 'blinks' && pathname === `/workspaces/${workspaceId}`);
+    (tab === 'links' && pathname === `/workspaces/${workspaceId}`);
 
   const href = useMemo(() => {
-    if (tab === 'blinks') {
+    if (tab === 'links') {
       return `/workspaces/${workspaceId}`;
     } else {
       return `/workspaces/${workspaceId}/${tab}`;

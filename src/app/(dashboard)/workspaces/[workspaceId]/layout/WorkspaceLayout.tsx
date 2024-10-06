@@ -3,7 +3,7 @@ import { PropsWithChildren } from 'react';
 import WorkspaceContent from './WorkspaceContent';
 import WorkspaceSidebar from './WorkspaceSidebar';
 
-export type WorkspaceTab = 'blinks' | 'members' | 'settings';
+export type WorkspaceTab = 'links' | 'members' | 'settings';
 
 type Props = PropsWithChildren;
 

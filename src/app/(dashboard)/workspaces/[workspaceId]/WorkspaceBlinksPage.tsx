@@ -28,9 +28,9 @@ function WorkspaceBlinksPage() {
 
   return (
     <>
-      <WorkspaceContentHeader title="Blinks">
-        <Link href={`/workspaces/${workspaceId}/blinks/new`}>
-          <Button>Novo blink</Button>
+      <WorkspaceContentHeader title="Links">
+        <Link href={`/workspaces/${workspaceId}/link/new`}>
+          <Button>Novo link</Button>
         </Link>
       </WorkspaceContentHeader>
 
@@ -41,7 +41,7 @@ function WorkspaceBlinksPage() {
           ))}
         </ul>
       ) : (
-        <p>Esta área de trabalho ainda não possui nenhum blink.</p>
+        <p>Esta área de trabalho ainda não possui nenhum link.</p>
       )}
     </>
   );

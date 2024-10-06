@@ -9,7 +9,7 @@ interface PageParams {
 function CreateBlinkPage({ params }: PageParams) {
   return (
     <div className="mx-auto w-full max-w-xl space-y-4">
-      <WorkspaceContentHeader title="Criar Blink" returnHref={`/workspaces/${params.workspaceId}`} />
+      <WorkspaceContentHeader title="Criar Link" returnHref={`/workspaces/${params.workspaceId}`} />
       <CreateBlinkForm />
     </div>
   );
