@@ -11,7 +11,9 @@ function Redirect({ to }: Props) {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace(to);
+    const url = new URL(window.location.href);
+    url.pathname = to;
+    router.replace(url.toString());
   }, [router, to]);
 
   return null;

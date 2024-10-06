@@ -5,7 +5,7 @@ import { PropsWithChildren } from 'react';
 import { cn } from '@/utils/html';
 
 import '@/styles/global.css';
-import RootProviders from './RootProviders';
+import RootProvider from '../providers/RootProvider';
 
 const interFont = Inter({
   subsets: ['latin'],
@@ -20,8 +20,10 @@ export const metadata: Metadata = {
 function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="pt-BR">
-      <body className={cn('bg-slate-100 text-slate-800 antialiased', interFont.className)}>
-        <RootProviders>{children}</RootProviders>
+      <body
+        className={cn('flex h-full min-h-screen flex-col bg-slate-100 text-slate-800 antialiased', interFont.className)}
+      >
+        <RootProvider>{children}</RootProvider>
       </body>
     </html>
   );

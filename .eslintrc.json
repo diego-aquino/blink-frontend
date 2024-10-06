@@ -147,7 +147,7 @@
     "@typescript-eslint/consistent-type-definitions": ["warn", "interface"],
     "@typescript-eslint/require-array-sort-compare": ["error", { "ignoreStringArrays": true }],
     "@typescript-eslint/method-signature-style": ["warn", "property"],
-    "@typescript-eslint/no-redeclare": "error",
+    "@typescript-eslint/no-redeclare": "off",
     "@typescript-eslint/no-array-constructor": "warn",
     "@typescript-eslint/no-empty-function": "warn",
     "@typescript-eslint/no-empty-interface": "warn",
@@ -255,6 +255,7 @@
     ],
     "@typescript-eslint/no-implied-eval": "error",
     "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-namespace": "off",
 
     "turbo/no-undeclared-env-vars": "off",
 
@@ -276,7 +277,7 @@
     "react/no-danger-with-children": "error",
     "react/no-deprecated": "error",
     "react/no-invalid-html-attribute": "error",
-    "react/no-namespace": "warn",
+    "react/no-namespace": "off",
     "react/no-unstable-nested-components": ["error", { "allowAsProps": true }],
     "react/void-dom-elements-no-children": "error",
     "react/jsx-boolean-value": "warn",
@@ -317,5 +318,14 @@
     "jsx-a11y/role-has-required-aria-props": "error",
     "jsx-a11y/role-supports-aria-props": "error",
     "jsx-a11y/tabindex-no-positive": "warn"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/types/**/generated.ts"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-empty-object-type": "off"
+      }
+    }
+  ]
 }
