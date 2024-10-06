@@ -1,12 +1,10 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
-import SpinnerIcon from '@/components/icons/common/SpinnerIcon';
 import useBlink from '@/hooks/workspaces/blinks/useBlink';
 
 import useWorkspaceParams, { WorkspaceParams } from '../../../hooks/useWorkspaceParams';
 import WorkspaceContentHeader from '../../../layout/WorkspaceContentHeader';
+import WorkspaceContentLoading from '../../../layout/WorkspaceContentLoading';
 import useBlinkParams, { BlinkParams } from '../hooks/useBlinkParams';
 import EditBlinkForm from './EditBlinkForm';
 
@@ -15,19 +13,13 @@ interface PageParams {
 }
 
 function EditBlinkPage({ params }: PageParams) {
-  const router = useRouter();
-
   const { workspaceId } = useWorkspaceParams();
   const { blinkId } = useBlinkParams();
 
   const blink = useBlink(workspaceId, blinkId);
 
   if (blink.isLoading) {
-    return (
-      <div className="flex flex-1 items-center justify-center">
-        <SpinnerIcon className="h-7 w-7 text-indigo-400" />
-      </div>
-    );
+    return <WorkspaceContentLoading />;
   }
 
   if (blink.isError || !blink.value) {
@@ -41,13 +33,7 @@ function EditBlinkPage({ params }: PageParams) {
         returnHref={`/workspaces/${params.workspaceId}/links/${params.blinkId}`}
       />
 
-      <EditBlinkForm
-        blink={blink.value}
-        onSuccess={(updatedBlink) => {
-          blink.optimisticSet(updatedBlink);
-          router.push(`/workspaces/${workspaceId}/links/${updatedBlink.id}`);
-        }}
-      />
+      <EditBlinkForm blink={blink.value} />
     </div>
   );
 }

@@ -1,47 +1,49 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useCallback } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 import { Blink } from '@/clients/backend/workspaces/blinks/types';
 import { Workspace } from '@/clients/backend/workspaces/types';
 import useAPI from '@/hooks/useAPI';
 
+import { ensureWorkspaceId } from '../utils';
+import useBlinkOptimisticActions from './useBlinkOptimisticActions';
 import { blinksKey } from './useBlinks';
+import { ensureBlinkId } from './utils';
 
-function useBlink(workspaceId: Workspace['id'] | undefined, blinkId: Blink['id'] | undefined) {
+function useBlink(
+  workspaceId: Workspace['id'] | undefined,
+  blinkId: Blink['id'] | undefined,
+  options: { enableFetch?: boolean } = {},
+) {
+  const { enableFetch = true } = options;
+
   const api = useAPI();
-  const queryClient = useQueryClient();
 
   const {
     data: workspace,
     isLoading,
     isSuccess,
     isError,
-  } = useQuery<Blink | undefined>({
+  } = useQuery<Blink>({
     queryKey: blinksKey.byBlinkId(workspaceId, blinkId),
-    queryFn: () => (workspaceId && blinkId ? api.backend.workspaces.blinks.get(workspaceId, blinkId) : undefined),
-    enabled: workspaceId !== undefined && blinkId !== undefined,
+    queryFn() {
+      const validWorkspaceId = ensureWorkspaceId(workspaceId);
+      const validBlinkId = ensureBlinkId(blinkId);
+
+      return api.backend.workspaces.blinks.get(validWorkspaceId, validBlinkId);
+    },
+    enabled: workspaceId !== undefined && blinkId !== undefined && enableFetch,
   });
 
-  const optimisticSet = useCallback(
-    (blink: Blink) => {
-      const queryKey = blinksKey.byBlinkId(workspaceId, blinkId);
-      queryClient.setQueryData<Blink | undefined>(queryKey, blink);
-    },
-    [blinkId, queryClient, workspaceId],
-  );
-
-  const optimisticRemove = useCallback(() => {
-    const queryKey = blinksKey.byBlinkId(workspaceId, blinkId);
-    queryClient.setQueryData<Blink | undefined>(queryKey, undefined);
-  }, [blinkId, queryClient, workspaceId]);
+  const optimisticActions = useBlinkOptimisticActions(workspaceId, blinkId);
 
   return {
     value: workspace,
     isLoading,
     isSuccess,
     isError,
-    optimisticSet,
-    optimisticRemove,
+    createOptimistically: optimisticActions.create,
+    updateOptimistically: optimisticActions.update,
+    removeOptimistically: optimisticActions.remove,
   };
 }
 

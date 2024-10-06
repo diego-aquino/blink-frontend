@@ -12,13 +12,20 @@ export const meKey = {
   },
 };
 
-interface Options {
-  maxRetries?: number;
-}
+function useMe(
+  options: {
+    maxRetries?: number;
+    enableFetch?: boolean;
+  } = {},
+) {
+  const { maxRetries = DEFAULT_RETRY_COUNT, enableFetch = true } = options;
 
-function useMe({ maxRetries = DEFAULT_RETRY_COUNT }: Options = {}) {
   const api = useAPI();
   const queryClient = useQueryClient();
+
+  const queryFn = useCallback(() => {
+    return api.backend.users.me();
+  }, [api.backend.users]);
 
   const {
     data: user,
@@ -27,11 +34,19 @@ function useMe({ maxRetries = DEFAULT_RETRY_COUNT }: Options = {}) {
     isError,
   } = useQuery<User>({
     queryKey: meKey.all(),
-    queryFn: () => api.backend.users.me(),
+    queryFn,
     retry(failureCount) {
       return failureCount < maxRetries;
     },
+    enabled: enableFetch,
   });
+
+  const prefetch = useCallback(async () => {
+    await queryClient.prefetchQuery({
+      queryKey: meKey.all(),
+      queryFn,
+    });
+  }, [queryClient, queryFn]);
 
   const invalidate = useCallback(async () => {
     await queryClient.invalidateQueries({ queryKey: meKey.all() });
@@ -46,6 +61,7 @@ function useMe({ maxRetries = DEFAULT_RETRY_COUNT }: Options = {}) {
     isLoading,
     isSuccess,
     isError,
+    prefetch,
     invalidate,
     clear,
   };

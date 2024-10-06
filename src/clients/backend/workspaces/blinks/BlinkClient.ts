@@ -10,6 +10,7 @@ import {
   BlinkCreationResult,
   BlinkUpdateInput,
   BlinkUpdateResult,
+  BlinkListSearchParams,
 } from './types';
 
 class BlinkClient {
@@ -24,9 +25,10 @@ class BlinkClient {
     return blink;
   }
 
-  async list(workspaceId: Workspace['id']) {
+  async list(workspaceId: Workspace['id'], params: BlinkListSearchParams) {
     const response = await this.http.get<BlinkListResult>(
       `/workspaces/${workspaceId}/blinks` satisfies BlinkPath.NonLiteral,
+      { params },
     );
     const blinksResult = response.data;
     return blinksResult;

@@ -1,7 +1,6 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -11,6 +10,8 @@ import Button from '@/components/common/Button';
 import PageLoading from '@/components/common/PageLoading';
 import Input from '@/components/form/Input';
 import useSession from '@/hooks/session/useSession';
+
+import useSignIn from './hooks/useSignIn';
 
 const formSchema = z.object({
   email: z.string().trim().min(1, 'Obrigatório').email('Email inválido'),
@@ -27,18 +28,7 @@ function SignInForm() {
     resolver: zodResolver(formSchema),
   });
 
-  const submitLogin = useMutation({
-    async mutationFn(values: FormValues) {
-      await session.login({
-        email: values.email,
-        password: values.password,
-      });
-    },
-
-    onSuccess() {
-      router.push('/workspaces');
-    },
-  });
+  const signIn = useSignIn();
 
   useEffect(() => {
     if (!session.isLoading && session.user !== null) {
@@ -53,7 +43,7 @@ function SignInForm() {
   return (
     <form
       noValidate
-      onSubmit={form.handleSubmit((values) => submitLogin.mutateAsync(values))}
+      onSubmit={form.handleSubmit((values) => signIn.run(values))}
       className="flex min-w-72 flex-col space-y-6"
     >
       <h1 className="text-center text-3xl font-medium">Blink</h1>
@@ -74,7 +64,7 @@ function SignInForm() {
         />
       </div>
 
-      <Button type="submit" loading={form.formState.isSubmitting || submitLogin.isPending}>
+      <Button type="submit" loading={form.formState.isSubmitting || signIn.isRunning}>
         Entrar
       </Button>
     </form>

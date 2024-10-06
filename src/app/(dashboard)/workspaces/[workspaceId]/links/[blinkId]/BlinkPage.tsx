@@ -1,8 +1,6 @@
 'use client';
 
-import { useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 import CopyToClipboardButton from '@/components/common/CopyToClipboardButton';
 import IconButton from '@/components/common/IconButton';
@@ -12,55 +10,25 @@ import CalendarIcon from '@/components/icons/common/CalendarIcon';
 import ClockIcon from '@/components/icons/common/ClockIcon';
 import EditIcon from '@/components/icons/common/EditIcon';
 import LinkIcon from '@/components/icons/common/LinkIcon';
-import SpinnerIcon from '@/components/icons/common/SpinnerIcon';
 import TrashIcon from '@/components/icons/common/TrashIcon';
-import useAPI from '@/hooks/useAPI';
 import useBlink from '@/hooks/workspaces/blinks/useBlink';
-import useBlinks from '@/hooks/workspaces/blinks/useBlinks';
+import useBlinkRemoval from '@/hooks/workspaces/blinks/useBlinkRemoval';
 import { getBlinkShortURL, getBlinkTitle } from '@/utils/blinks';
 
 import useWorkspaceParams from '../../hooks/useWorkspaceParams';
 import WorkspaceContentHeader from '../../layout/WorkspaceContentHeader';
+import WorkspaceContentLoading from '../../layout/WorkspaceContentLoading';
 import useBlinkParams from './hooks/useBlinkParams';
 
 function BlinkPage() {
-  const api = useAPI();
-  const router = useRouter();
-
   const { workspaceId } = useWorkspaceParams();
   const { blinkId } = useBlinkParams();
 
-  const blinks = useBlinks(workspaceId, { enableFetch: false });
   const blink = useBlink(workspaceId, blinkId);
-
-  const submitBlinkRemoval = useMutation({
-    async mutationFn() {
-      if (!workspaceId) {
-        throw new Error(`Expected a workspace identifier, but found ${workspaceId}.`);
-      }
-      if (!blinkId) {
-        throw new Error(`Expected a blink identifier, but found ${blinkId}.`);
-      }
-
-      await api.backend.workspaces.blinks.remove(workspaceId, blinkId);
-
-      return blinkId;
-    },
-
-    onSuccess(blinkId) {
-      blink.optimisticRemove();
-      blinks.optimisticRemove(blinkId);
-
-      router.push(`/workspaces/${workspaceId}`);
-    },
-  });
+  const blinkRemoval = useBlinkRemoval(workspaceId, blinkId);
 
   if (blink.isLoading) {
-    return (
-      <div className="flex flex-1 items-center justify-center">
-        <SpinnerIcon className="h-7 w-7 text-indigo-400" />
-      </div>
-    );
+    return <WorkspaceContentLoading />;
   }
 
   if (blink.isError || !blink.value) {
@@ -89,8 +57,8 @@ function BlinkPage() {
           <IconButton
             variant="danger"
             title="Remover"
-            loading={submitBlinkRemoval.isPending}
-            onClick={() => submitBlinkRemoval.mutateAsync()}
+            loading={blinkRemoval.isRunning}
+            onClick={() => blinkRemoval.run()}
           >
             <TrashIcon className="h-5 w-5" />
           </IconButton>

@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 
 import BlinkClient from './blinks/BlinkClient';
-import { WorkspaceListResult, WorkspacePath, Workspace, WorkspaceGetResult } from './types';
+import { WorkspaceListResult, WorkspacePath, Workspace, WorkspaceGetResult, WorkspaceListSearchParams } from './types';
 
 class WorkspaceClient {
   blinks: BlinkClient;
@@ -10,8 +10,8 @@ class WorkspaceClient {
     this.blinks = new BlinkClient(http);
   }
 
-  async list() {
-    const response = await this.http.get<WorkspaceListResult>('/workspaces' satisfies WorkspacePath);
+  async list(params: WorkspaceListSearchParams) {
+    const response = await this.http.get<WorkspaceListResult>('/workspaces' satisfies WorkspacePath, { params });
     const workspacesResult = response.data;
     return workspacesResult;
   }

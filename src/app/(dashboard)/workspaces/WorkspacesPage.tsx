@@ -1,21 +1,24 @@
 'use client';
 
-import SpinnerIcon from '@/components/icons/common/SpinnerIcon';
+import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import useWorkspaces from '@/hooks/workspaces/useWorkspaces';
 
 import WorkspaceContent from './[workspaceId]/layout/WorkspaceContent';
+import WorkspaceContentLoading from './[workspaceId]/layout/WorkspaceContentLoading';
+import WorkspaceContentLoadingMore from './[workspaceId]/layout/WorkspaceContentLoadingMore';
 import WorkspaceContentTitle from './[workspaceId]/layout/WorkspaceContentTitle';
 import WorkspaceItem from './WorkspaceItem';
 
 function WorkspacesPage() {
   const workspaces = useWorkspaces();
 
+  const workspacesInfiniteScroll = useInfiniteScroll<HTMLUListElement>(
+    { onRequestNextPage: workspaces.loadMore, thresholdInPixels: 100 },
+    [workspaces.loadMore],
+  );
+
   if (workspaces.isLoading) {
-    return (
-      <div className="flex flex-1 items-center justify-center">
-        <SpinnerIcon className="h-7 w-7 text-indigo-400" />
-      </div>
-    );
+    return <WorkspaceContentLoading />;
   }
 
   if (workspaces.isError) {
@@ -28,13 +31,21 @@ function WorkspacesPage() {
     <WorkspaceContent>
       <WorkspaceContentTitle>Minhas áreas de trabalho</WorkspaceContentTitle>
 
-      <ul className="space-y-1">
-        {workspaces.list.map((workspace) => (
-          <WorkspaceItem key={workspace.id} workspace={workspace} />
-        ))}
+      {workspaces.list.length > 0 && (
+        <ul
+          ref={workspacesInfiniteScroll.ref}
+          onScroll={workspacesInfiniteScroll.onScroll}
+          className="h-[calc(100vh-12rem)] space-y-2 overflow-y-auto px-1"
+        >
+          {workspaces.list.map((workspace) => (
+            <WorkspaceItem key={workspace.id} workspace={workspace} />
+          ))}
 
-        {workspaces.list.length === 0 && <p>Você ainda não possui nenhuma área de trabalho.</p>}
-      </ul>
+          {workspaces.isLoadingMore && <WorkspaceContentLoadingMore />}
+        </ul>
+      )}
+
+      {workspaces.list.length === 0 && <p>Você ainda não possui nenhuma área de trabalho.</p>}
     </WorkspaceContent>
   );
 }

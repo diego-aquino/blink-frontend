@@ -4,6 +4,7 @@ import { Workspace } from '@/clients/backend/workspaces/types';
 
 import useAPI from '../useAPI';
 import { workspacesKey } from './useWorkspaces';
+import { ensureWorkspaceId } from './utils';
 
 function useWorkspace(workspaceId: Workspace['id'] | undefined) {
   const api = useAPI();
@@ -13,9 +14,12 @@ function useWorkspace(workspaceId: Workspace['id'] | undefined) {
     isLoading,
     isSuccess,
     isError,
-  } = useQuery<Workspace | undefined>({
+  } = useQuery<Workspace>({
     queryKey: workspacesKey.byId(workspaceId),
-    queryFn: () => (workspaceId ? api.backend.workspaces.get(workspaceId) : undefined),
+    queryFn() {
+      const validWorkspaceId = ensureWorkspaceId(workspaceId);
+      return api.backend.workspaces.get(validWorkspaceId);
+    },
     enabled: workspaceId !== undefined,
   });
 

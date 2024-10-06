@@ -4,6 +4,7 @@ import { BlinkComponents, BlinkSchema } from '@/types/backend/generated';
 
 export type Workspace = BlinkComponents['schemas']['Workspace'];
 
+export type WorkspaceListSearchParams = BlinkSchema['/workspaces']['GET']['request']['searchParams'];
 export type WorkspaceListResult = BlinkSchema['/workspaces']['GET']['response']['200']['body'];
 export type WorkspaceGetResult = BlinkSchema['/workspaces/:workspaceId']['GET']['response']['200']['body'];
 

@@ -1,9 +1,11 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useCallback } from 'react';
+import { InfiniteData, QueryKey, useInfiniteQuery } from '@tanstack/react-query';
+import { useCallback, useMemo } from 'react';
 
 import { Blink, BlinkListResult } from '@/clients/backend/workspaces/blinks/types';
 import { Workspace } from '@/clients/backend/workspaces/types';
 import useAPI from '@/hooks/useAPI';
+
+import useBlinksOptimisticActions from './useBlinksOptimisticActions';
 
 export const blinksKey = {
   all() {
@@ -19,50 +21,85 @@ export const blinksKey = {
   },
 };
 
+const EMPTY_BLINK_PAGES: BlinkListResult[] = [];
 const EMPTY_BLINK_LIST_RESULT: BlinkListResult = { blinks: [], total: 0 };
 
-function useBlinks(workspaceId: Workspace['id'] | undefined, options: { enableFetch?: boolean } = {}) {
-  const { enableFetch = true } = options;
+const DEFAULT_PAGE_SIZE = 10;
+
+function useBlinks(
+  workspaceId: Workspace['id'] | undefined,
+  options: { pageSize?: number; enableFetch?: boolean } = {},
+) {
+  const { pageSize = DEFAULT_PAGE_SIZE, enableFetch = true } = options;
 
   const api = useAPI();
-  const queryClient = useQueryClient();
+
+  const initialPageParam = useMemo(() => ({ page: 1, limit: pageSize }), [pageSize]);
 
   const {
-    data: { blinks, total } = EMPTY_BLINK_LIST_RESULT,
+    data: { pages: blinkPages = EMPTY_BLINK_PAGES } = {},
     isLoading,
     isSuccess,
     isError,
-  } = useQuery<BlinkListResult | undefined>({
+
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery<
+    BlinkListResult,
+    Error,
+    InfiniteData<BlinkListResult>,
+    QueryKey,
+    { page: number; limit: number }
+  >({
     queryKey: blinksKey.byWorkspaceId(workspaceId),
-    queryFn: () => (workspaceId ? api.backend.workspaces.blinks.list(workspaceId) : undefined),
+    queryFn({ pageParam: { page, limit } }) {
+      if (!workspaceId) {
+        return EMPTY_BLINK_LIST_RESULT;
+      }
+
+      return api.backend.workspaces.blinks.list(workspaceId, {
+        page: `${page}`,
+        limit: `${limit}`,
+      });
+    },
+
+    initialPageParam,
+    getNextPageParam(lastPage, allPages) {
+      const isFinished = lastPage.blinks.length < pageSize;
+      return isFinished ? undefined : { page: allPages.length + 1, limit: pageSize };
+    },
+
     enabled: workspaceId !== undefined && enableFetch,
   });
 
-  const optimisticRemove = useCallback(
-    (blinkId: Blink['id']) => {
-      const queryKey = blinksKey.byWorkspaceId(workspaceId);
+  const blinks = useMemo(() => {
+    return blinkPages.flatMap((page) => page.blinks);
+  }, [blinkPages]);
 
-      queryClient.setQueryData<BlinkListResult | undefined>(queryKey, (currentResult) => {
-        if (!currentResult) {
-          return currentResult;
-        }
+  const total = useMemo(() => {
+    return blinkPages.length > 0 ? blinkPages[0].total : 0;
+  }, [blinkPages]);
 
-        return {
-          blinks: currentResult.blinks.filter((blink) => blink.id !== blinkId),
-          total: currentResult.total - 1,
-        };
-      });
-    },
-    [queryClient, workspaceId],
-  );
+  const optimisticActions = useBlinksOptimisticActions(workspaceId);
+
+  const loadMore = useCallback(async () => {
+    if (hasNextPage) {
+      await fetchNextPage();
+    }
+  }, [fetchNextPage, hasNextPage]);
 
   return {
     list: blinks,
     total,
+    loadMore,
     isLoading,
+    isLoadingMore: isFetchingNextPage,
     isSuccess,
     isError,
-    optimisticRemove,
+    createOptimistically: optimisticActions.create,
+    updateOptimistically: optimisticActions.update,
+    removeOptimistically: optimisticActions.remove,
   };
 }
 
