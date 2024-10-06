@@ -35,7 +35,7 @@ function WorkspaceBlinksPage() {
       </WorkspaceContentHeader>
 
       {blinks.list.length > 0 ? (
-        <ul className="space-y-1">
+        <ul className="space-y-2">
           {blinks.list.map((blink) => (
             <BlinkItem key={blink.id} blink={blink} />
           ))}
