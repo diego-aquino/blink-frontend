@@ -23,13 +23,13 @@ function WorkspaceBlinksPage() {
   }
 
   if (blinks.isError) {
-    return <p>Não foi possível carregar os blinks.</p>;
+    return <p>Não foi possível carregar os links.</p>;
   }
 
   return (
     <>
       <WorkspaceContentHeader title="Links">
-        <Link href={`/workspaces/${workspaceId}/link/new`}>
+        <Link href={`/workspaces/${workspaceId}/links/new`}>
           <Button>Novo link</Button>
         </Link>
       </WorkspaceContentHeader>

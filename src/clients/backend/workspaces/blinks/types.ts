@@ -10,6 +10,10 @@ export type BlinkCreationResult = BlinkSchema['/workspaces/:workspaceId/blinks']
 export type BlinkListResult = BlinkSchema['/workspaces/:workspaceId/blinks']['GET']['response']['200']['body'];
 export type BlinkGetResult = BlinkSchema['/workspaces/:workspaceId/blinks/:blinkId']['GET']['response']['200']['body'];
 
+export type BlinkUpdateInput = BlinkSchema['/workspaces/:workspaceId/blinks/:blinkId']['PATCH']['request']['body'];
+export type BlinkUpdateResult =
+  BlinkSchema['/workspaces/:workspaceId/blinks/:blinkId']['PATCH']['response']['200']['body'];
+
 export namespace BlinkPath {
   export type NonLiteral = Extract<HttpSchemaPath.NonLiteral<BlinkSchema>, `/workspaces/${string}/blinks${string}`>;
 }

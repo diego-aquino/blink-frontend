@@ -15,7 +15,7 @@ function Input(
     type = 'text',
     hideLabel = false,
     errorMessage,
-    className,
+    className = '',
     labelClassName,
     required = true,
     disabled = false,
@@ -30,7 +30,7 @@ function Input(
       type={type}
       className={cn(
         type !== 'checkbox' && 'rounded py-1 outline-none ring-2 ring-slate-300 transition-shadow',
-        !className?.includes('px-') && 'px-2',
+        !/\bpx-[^ ]+/.test(className) && 'px-2',
         disabled || readOnly
           ? 'cursor-not-allowed bg-slate-50 opacity-80'
           : 'bg-white hover:ring-slate-400 focus:ring-slate-500',

@@ -1,7 +1,16 @@
 import { AxiosInstance } from 'axios';
 
 import { Workspace } from '../types';
-import { BlinkListResult, BlinkPath, Blink, BlinkGetResult, BlinkCreationInput, BlinkCreationResult } from './types';
+import {
+  BlinkListResult,
+  BlinkPath,
+  Blink,
+  BlinkGetResult,
+  BlinkCreationInput,
+  BlinkCreationResult,
+  BlinkUpdateInput,
+  BlinkUpdateResult,
+} from './types';
 
 class BlinkClient {
   constructor(private http: AxiosInstance) {}
@@ -29,6 +38,19 @@ class BlinkClient {
     );
     const blink = response.data;
     return blink;
+  }
+
+  async edit(workspaceId: Workspace['id'], blinkId: Blink['id'], body: BlinkUpdateInput) {
+    const response = await this.http.patch<BlinkUpdateResult>(
+      `/workspaces/${workspaceId}/blinks/${blinkId}` satisfies BlinkPath.NonLiteral,
+      body,
+    );
+    const blink = response.data;
+    return blink;
+  }
+
+  async remove(workspaceId: Workspace['id'], blinkId: Blink['id']) {
+    await this.http.delete(`/workspaces/${workspaceId}/blinks/${blinkId}` satisfies BlinkPath.NonLiteral);
   }
 }
 

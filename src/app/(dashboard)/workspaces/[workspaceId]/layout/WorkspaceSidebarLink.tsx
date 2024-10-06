@@ -52,7 +52,7 @@ function WorkspaceSidebarLink({ tab }: Props) {
       href={href}
       className={cn(
         'focus: flex h-10 items-center space-x-2 rounded-lg py-2 pl-4 pr-5 font-medium transition-colors before:-ml-2.5 before:mr-2 before:h-full before:w-1 before:rounded-full before:transition-colors hover:bg-indigo-50 active:bg-indigo-100',
-        isSelected ? 'text-indigo-700 before:bg-indigo-400' : 'text-slate-800 before:bg-transparent',
+        isSelected ? 'text-indigo-700 before:bg-indigo-500' : 'text-slate-800 before:bg-transparent',
       )}
     >
       {icon}
