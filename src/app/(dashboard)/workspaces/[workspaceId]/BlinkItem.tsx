@@ -10,6 +10,7 @@ interface Props {
   blink: Blink;
 }
 
+/** Componente que exibe um blink em uma lista. */
 function BlinkItem({ blink }: Props) {
   const formattedCreationDate = new Date(blink.createdAt).toLocaleDateString();
   const formattedCreationTime = new Date(blink.createdAt).toLocaleString();

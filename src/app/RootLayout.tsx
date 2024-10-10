@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   description: 'Encurte seus links de forma simples e rápida.',
 };
 
+/** Layout base para todas as páginas. */
 function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="pt-BR">

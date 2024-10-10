@@ -27,6 +27,7 @@ interface Props {
   onSubmit: (values: FormValues) => void;
 }
 
+/** Formulário para criação ou edição de um link encurtado. */
 function BlinkForm({ defaultName, defaultURL, defaultRedirectId, cancelHref, onSubmit }: Props) {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),

@@ -7,6 +7,7 @@ interface Props extends SVGAttributes<SVGSVGElement> {
   direction?: 'left' | 'right' | 'up' | 'down';
 }
 
+/** Ícone de seta com suporte para diferentes direções. */
 function ChevronIcon({ direction = 'right', className, ...rest }: Props) {
   return (
     <BiChevronRight

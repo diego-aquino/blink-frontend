@@ -9,6 +9,7 @@ interface Props extends ComponentProps<'input'> {
   labelClassName?: string;
 }
 
+/** Componente de input com label. */
 function Input(
   {
     label,

@@ -1,5 +1,6 @@
 import SpinnerIcon from '@/components/icons/common/SpinnerIcon';
 
+/** Componente para indicar que uma p´gina está carregando. */
 function PageLoading() {
   return (
     <div className="flex h-screen w-screen items-center justify-center">

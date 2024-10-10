@@ -11,6 +11,7 @@ import SessionContext, { SessionContextValue } from './SessionContext';
 
 type Props = PropsWithChildren;
 
+/** Provedor de contexto de sessão e responsável por gerenciar o estado de autenticação do usuário. */
 function SessionProvider({ children }: Props) {
   const api = useAPI();
   const queryClient = useQueryClient();

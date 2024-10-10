@@ -7,6 +7,7 @@ interface Props {
   to: string;
 }
 
+/** Componente para redirecionar o usuário para outra rota. */
 function Redirect({ to }: Props) {
   const router = useRouter();
 

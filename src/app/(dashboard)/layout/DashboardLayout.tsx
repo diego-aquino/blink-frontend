@@ -8,6 +8,7 @@ import DashboardHeader from './DashboardHeader';
 
 type Props = PropsWithChildren;
 
+/** Layout para páginas do dashboard. */
 function DashboardLayout({ children }: Props) {
   return (
     <>

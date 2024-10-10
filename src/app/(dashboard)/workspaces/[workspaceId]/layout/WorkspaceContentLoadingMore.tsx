@@ -1,5 +1,6 @@
 import SpinnerIcon from '@/components/icons/common/SpinnerIcon';
 
+/** Componente de loading para carregamento de mais conteúdo em uma tela de workspace. Usado no scroll infinito. */
 function WorkspaceContentLoadingMore() {
   return (
     <div className="h-10">

@@ -28,6 +28,7 @@ interface Props {
   tab: WorkspaceTab;
 }
 
+/** Componente de link para navegação entre as abas do workspace. */
 function WorkspaceSidebarLink({ tab }: Props) {
   const { workspaceId } = useWorkspaceParams();
   const pathname = usePathname();

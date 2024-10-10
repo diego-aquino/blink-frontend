@@ -8,6 +8,10 @@ import useWorkspaceParams from '../workspaces/[workspaceId]/hooks/useWorkspacePa
 import DashboardHeaderBreadCrumbs, { Crumb } from './DashboardHeaderBreadCrumbs';
 import DashboardHeaderProfile from './DashboardHeaderProfile';
 
+/**
+ * Componente que renderiza o cabeçalho da dashboard. Ele mostra o nome do projeto, seguido do nome do workspace caso
+ * esteja em um.
+ */
 function DashboardHeader() {
   const { workspaceId } = useWorkspaceParams();
   const workspace = useWorkspace(workspaceId);

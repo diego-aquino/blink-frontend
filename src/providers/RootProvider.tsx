@@ -8,6 +8,7 @@ import SessionProvider from './session/SessionProvider';
 
 type Props = PropsWithChildren;
 
+/** Provedor raiz da aplicação. */
 function RootProvider({ children }: Props) {
   return (
     <QueryProvider>

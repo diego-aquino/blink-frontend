@@ -6,6 +6,7 @@ interface PageParams {
   params: WorkspaceParams;
 }
 
+/** Página de criação de um novo link. */
 function CreateBlinkPage({ params }: PageParams) {
   return (
     <div className="mx-auto w-full max-w-xl space-y-4">

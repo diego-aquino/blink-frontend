@@ -5,6 +5,7 @@ import useBlinkCreation from '@/hooks/workspaces/blinks/useBlinkCreation';
 import useWorkspaceParams from '../../hooks/useWorkspaceParams';
 import BlinkForm from '../BlinkForm';
 
+/** Formulário de criação de um novo link. */
 function CreateBlinkForm() {
   const { workspaceId } = useWorkspaceParams();
 

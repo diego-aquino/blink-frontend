@@ -4,6 +4,7 @@ import DashboardContent from '@/app/(dashboard)/layout/DashboardContent';
 
 type Props = PropsWithChildren;
 
+/** Componente wrapper para o conteúdo de uma tela de workspace. */
 function WorkspaceContent({ children }: Props) {
   return (
     <DashboardContent>

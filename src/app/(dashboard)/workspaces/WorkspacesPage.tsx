@@ -9,6 +9,7 @@ import WorkspaceContentLoadingMore from './[workspaceId]/layout/WorkspaceContent
 import WorkspaceContentTitle from './[workspaceId]/layout/WorkspaceContentTitle';
 import WorkspaceItem from './WorkspaceItem';
 
+/** Página que lista as áreas de trabalho do usuário. */
 function WorkspacesPage() {
   const workspaces = useWorkspaces();
 

@@ -7,6 +7,7 @@ interface Props extends SVGAttributes<SVGSVGElement> {
   direction?: 'left' | 'right' | 'up' | 'down';
 }
 
+/** Ícone de seta com suporte a direção. */
 function ArrowIcon({ direction = 'right', className, ...rest }: Props) {
   return (
     <BiRightArrowAlt

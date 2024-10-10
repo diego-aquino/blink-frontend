@@ -12,6 +12,7 @@ interface PageParams {
   params: WorkspaceParams & BlinkParams;
 }
 
+/** Página de edição de um link. */
 function EditBlinkPage({ params }: PageParams) {
   const { workspaceId } = useWorkspaceParams();
   const { blinkId } = useBlinkParams();

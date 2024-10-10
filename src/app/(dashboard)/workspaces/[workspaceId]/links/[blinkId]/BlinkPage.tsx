@@ -20,6 +20,7 @@ import WorkspaceContentHeader from '../../layout/WorkspaceContentHeader';
 import WorkspaceContentLoading from '../../layout/WorkspaceContentLoading';
 import useBlinkParams from './hooks/useBlinkParams';
 
+/** Página de visualização de um link. */
 function BlinkPage() {
   const { workspaceId } = useWorkspaceParams();
   const { blinkId } = useBlinkParams();

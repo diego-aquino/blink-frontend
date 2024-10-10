@@ -10,6 +10,7 @@ interface Props extends PropsWithChildren {
   returnHref?: string;
 }
 
+/** Componente para o cabeçalho de uma tela de workspace. */
 function WorkspaceContentHeader({ title, returnHref, children }: Props) {
   return (
     <header className="flex justify-between space-x-4">

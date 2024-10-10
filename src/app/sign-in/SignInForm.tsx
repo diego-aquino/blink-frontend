@@ -19,6 +19,7 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
+/** Formulário de login. Se o usuário já estiver autenticado, redireciona para a página de áreas de trabalho. */
 function SignInForm() {
   const session = useSession();
   const router = useRouter();

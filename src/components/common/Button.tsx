@@ -8,6 +8,7 @@ interface Props extends ComponentProps<'button'> {
   loading?: boolean;
 }
 
+/** Componente genérico de botão com suporte a loading e variantes. */
 function Button({ variant = 'primary', loading = false, disabled = false, className = '', children, ...rest }: Props) {
   return (
     <button

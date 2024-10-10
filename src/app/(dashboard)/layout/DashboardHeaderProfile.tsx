@@ -4,6 +4,7 @@ import IconButton from '@/components/common/IconButton';
 import ProfileIcon from '@/components/icons/common/ProfileIcon';
 import useSignOut from '@/hooks/session/useSignOut';
 
+/** Botão de perfil do usuário no cabeçalho do dashboard. */
 function DashboardHeaderProfile() {
   const signOut = useSignOut();
 

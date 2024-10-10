@@ -1,5 +1,6 @@
 import SignInForm from './SignInForm';
 
+/** Página de login. */
 function SignInPage() {
   return (
     <div className="flex flex-1 items-center justify-center">

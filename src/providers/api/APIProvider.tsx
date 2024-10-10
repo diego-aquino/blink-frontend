@@ -8,6 +8,7 @@ import APIContext, { APIContextValue } from './APIContext';
 
 type Props = PropsWithChildren;
 
+/** Provedor de contexto da API e responsável por prover a instância do cliente de backend. */
 function APIProvider({ children }: Props) {
   const backendClient = useMemo(() => new BackendClient(), []);
 

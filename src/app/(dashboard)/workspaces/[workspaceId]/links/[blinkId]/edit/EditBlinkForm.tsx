@@ -11,6 +11,7 @@ interface Props {
   blink: Blink;
 }
 
+/** Formulário de edição de um link. */
 function EditBlinkForm({ blink }: Props) {
   const { workspaceId } = useWorkspaceParams();
   const { blinkId } = useBlinkParams();

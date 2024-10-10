@@ -87,125 +87,135 @@ export type BlinkSchema = HttpSchema<{
 export interface BlinkComponents {
   schemas: {
     User: {
-      /** @description O id do usuário */
+      /** O id do usuário */
       id: string;
-      /** @description O nome do usuário */
+      /** O nome do usuário */
       name: string;
       /**
        * Format: email
-       * @description O email do usuário
+       *
+       * O email do usuário
        */
       email: string;
       /**
        * Format: date-time
-       * @description A data de criação do usuário
+       *
+       * A data de criação do usuário
        */
       createdAt: string;
       /**
        * Format: date-time
-       * @description A data de atualização do usuário
+       *
+       * A data de atualização do usuário
        */
       updatedAt: string;
     };
     Workspace: {
-      /** @description O id do workspace */
+      /** O id do workspace */
       id: string;
-      /** @description O nome do workspace */
+      /** O nome do workspace */
       name: string;
       /**
        * Format: date-time
-       * @description A data de criação do workspace
+       *
+       * A data de criação do workspace
        */
       createdAt: string;
       /**
        * Format: date-time
-       * @description A data de atualização do workspace
+       *
+       * A data de atualização do workspace
        */
       updatedAt: string;
     };
     WorkspaceMember: {
-      /** @description O id do membro */
+      /** O id do membro */
       id: string;
       user: BlinkComponents['schemas']['User'];
       type: BlinkComponents['schemas']['WorkspaceMemberType'];
       /**
        * Format: date-time
-       * @description A data de criação do membro
+       *
+       * A data de criação do membro
        */
       createdAt: string;
       /**
        * Format: date-time
-       * @description A data de atualização do membro
+       *
+       * A data de atualização do membro
        */
       updatedAt: string;
     };
     /**
-     * @description O tipo do membro
+     * O tipo do membro
+     *
      * @enum {string}
      */
     WorkspaceMemberType: 'ADMINISTRATOR' | 'DEFAULT';
     Blink: {
-      /** @description O id do blink */
+      /** O id do blink */
       id: string;
-      /** @description O nome do blink */
+      /** O nome do blink */
       name?: string | null;
-      /** @description A url do blink */
+      /** A url do blink */
       url: string;
-      /** @description O id do redirecionamento */
+      /** O id do redirecionamento */
       redirectId: string;
-      /** @description O id do workspace */
+      /** O id do workspace */
       workspaceId: string;
       creator?: BlinkComponents['schemas']['User'];
       /**
        * Format: date-time
-       * @description A data de criação do blink
+       *
+       * A data de criação do blink
        */
       createdAt: string;
       /**
        * Format: date-time
-       * @description A data de atualização do blink
+       *
+       * A data de atualização do blink
        */
       updatedAt: string;
     };
     ValidationError: {
-      /** @description A mensagem de erro */
+      /** A mensagem de erro */
       message: string;
-      /** @description Os problemas de validação */
+      /** Os problemas de validação */
       issues?: ({
-        /** @description A mensagem de erro */
+        /** A mensagem de erro */
         message?: string;
-        /** @description O código do erro */
+        /** O código do erro */
         code?: string;
-        /** @description O caminho do erro */
+        /** O caminho do erro */
         path?: (string | number)[];
       } & {
         [key: string]: any;
       })[];
-      /** @description O código do erro */
+      /** O código do erro */
       code?: string;
     };
     AuthError: {
-      /** @description A mensagem de erro */
+      /** A mensagem de erro */
       message: string;
-      /** @description O código do erro */
+      /** O código do erro */
       code?: string;
     };
     NotFoundError: {
-      /** @description A mensagem de erro */
+      /** A mensagem de erro */
       message: string;
-      /** @description O código do erro */
+      /** O código do erro */
       code?: string;
     };
     ConflictError: {
-      /** @description A mensagem de erro */
+      /** A mensagem de erro */
       message: string;
-      /** @description O código do erro */
+      /** O código do erro */
       code?: string;
     };
     InternalServerError: {
-      /** @description A mensagem de erro */
+      /** A mensagem de erro */
       message: string;
-      /** @description O código do erro */
+      /** O código do erro */
       code?: string;
     };
   };
@@ -215,31 +225,32 @@ export interface BlinkOperations {
   'users/create': HttpSchema.Method<{
     request: {
       body: {
-        /** @description O nome do usuário */
+        /** O nome do usuário */
         name: string;
         /**
          * Format: email
-         * @description O email do usuário
+         *
+         * O email do usuário
          */
         email: string;
-        /** @description A senha do usuário */
+        /** A senha do usuário */
         password: string;
       };
     };
     response: {
-      /** @description Usuário criado */
+      /** Usuário criado */
       201: {
         body: BlinkComponents['schemas']['User'];
       };
-      /** @description Erro de validação */
+      /** Erro de validação */
       400: {
         body: BlinkComponents['schemas']['ValidationError'];
       };
-      /** @description Email em uso por outro usuário */
+      /** Email em uso por outro usuário */
       409: {
         body: BlinkComponents['schemas']['ConflictError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -247,19 +258,19 @@ export interface BlinkOperations {
   }>;
   'users/get/me': HttpSchema.Method<{
     response: {
-      /** @description Usuário encontrado */
+      /** Usuário encontrado */
       200: {
         body: BlinkComponents['schemas']['User'];
       };
-      /** @description Não autenticado */
+      /** Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Usuário não encontrado */
+      /** Usuário não encontrado */
       404: {
         body: BlinkComponents['schemas']['NotFoundError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -267,23 +278,23 @@ export interface BlinkOperations {
   }>;
   'users/get': HttpSchema.Method<{
     response: {
-      /** @description Usuário encontrado */
+      /** Usuário encontrado */
       200: {
         body: BlinkComponents['schemas']['User'];
       };
-      /** @description Não autenticado */
+      /** Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Não autorizado */
+      /** Não autorizado */
       403: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Usuário não encontrado */
+      /** Usuário não encontrado */
       404: {
         body: BlinkComponents['schemas']['NotFoundError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -291,21 +302,21 @@ export interface BlinkOperations {
   }>;
   'users/delete': HttpSchema.Method<{
     response: {
-      /** @description Usuário removido */
+      /** Usuário removido */
       204: {};
-      /** @description Não autenticado */
+      /** Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Não autorizado */
+      /** Não autorizado */
       403: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Usuário não encontrado */
+      /** Usuário não encontrado */
       404: {
         body: BlinkComponents['schemas']['NotFoundError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -314,41 +325,42 @@ export interface BlinkOperations {
   'users/update': HttpSchema.Method<{
     request: {
       body: {
-        /** @description O nome do usuário */
+        /** O nome do usuário */
         name?: string;
         /**
          * Format: email
-         * @description O email do usuário
+         *
+         * O email do usuário
          */
         email?: string;
       };
     };
     response: {
-      /** @description Usuário atualizado */
+      /** Usuário atualizado */
       200: {
         body: BlinkComponents['schemas']['User'];
       };
-      /** @description Erro de validação */
+      /** Erro de validação */
       400: {
         body: BlinkComponents['schemas']['ValidationError'];
       };
-      /** @description Não autenticado */
+      /** Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Não autorizado */
+      /** Não autorizado */
       403: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Usuário não encontrado */
+      /** Usuário não encontrado */
       404: {
         body: BlinkComponents['schemas']['NotFoundError'];
       };
-      /** @description Email em uso por outro usuário */
+      /** Email em uso por outro usuário */
       409: {
         body: BlinkComponents['schemas']['ConflictError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -359,25 +371,26 @@ export interface BlinkOperations {
       body: {
         /**
          * Format: email
-         * @description O email do usuário
+         *
+         * O email do usuário
          */
         email: string;
-        /** @description A senha do usuário */
+        /** A senha do usuário */
         password: string;
       };
     };
     response: {
-      /** @description Usuário autenticado */
+      /** Usuário autenticado */
       204: {};
-      /** @description Erro de validação */
+      /** Erro de validação */
       400: {
         body: BlinkComponents['schemas']['ValidationError'];
       };
-      /** @description Credenciais inválidas */
+      /** Credenciais inválidas */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -385,13 +398,13 @@ export interface BlinkOperations {
   }>;
   'auth/logout': HttpSchema.Method<{
     response: {
-      /** @description Usuário deslogado */
+      /** Usuário deslogado */
       204: {};
-      /** @description Não autenticado */
+      /** Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -399,17 +412,17 @@ export interface BlinkOperations {
   }>;
   'auth/refresh': HttpSchema.Method<{
     response: {
-      /** @description Novo token de acesso gerado */
+      /** Novo token de acesso gerado */
       204: {};
-      /** @description Erro de validação */
+      /** Erro de validação */
       400: {
         body: BlinkComponents['schemas']['ValidationError'];
       };
-      /** @description Credenciais inválidas */
+      /** Credenciais inválidas */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -418,28 +431,28 @@ export interface BlinkOperations {
   'auth/password/update': HttpSchema.Method<{
     request: {
       body: {
-        /** @description A senha atual */
+        /** A senha atual */
         oldPassword: string;
-        /** @description A nova senha */
+        /** A nova senha */
         newPassword: string;
       };
     };
     response: {
-      /** @description Senha alterada */
+      /** Senha alterada */
       204: {};
-      /** @description Erro de validação ou senha atual inválida */
+      /** Erro de validação ou senha atual inválida */
       400: {
         body: BlinkComponents['schemas']['ValidationError'];
       };
-      /** @description Não autenticado */
+      /** Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Não autorizado */
+      /** Não autorizado */
       403: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -448,32 +461,35 @@ export interface BlinkOperations {
   'workspaces/list': HttpSchema.Method<{
     request: {
       searchParams: HttpSearchParamsSerialized<{
-        /** @description O nome do workspace para filtrar */
+        /** O nome do workspace para filtrar */
         name?: string;
-        /** @description O número da página */
+        /** O número da página */
         page?: number;
-        /** @description O número de workspaces por página */
+        /** O número de workspaces por página */
         limit?: number;
       }>;
     };
     response: {
-      /** @description Workspaces listados */
+      /** Workspaces listados */
       200: {
         body: {
           workspaces: BlinkComponents['schemas']['Workspace'][];
-          /** @example 1 */
+          /**
+           * @example
+           *   1;
+           */
           total: number;
         };
       };
-      /** @description Não autenticado */
+      /** Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Não autorizado */
+      /** Não autorizado */
       403: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -482,28 +498,28 @@ export interface BlinkOperations {
   'workspaces/create': HttpSchema.Method<{
     request: {
       body: {
-        /** @description O nome do workspace */
+        /** O nome do workspace */
         name: string;
       };
     };
     response: {
-      /** @description Workspace criado */
+      /** Workspace criado */
       201: {
         body: BlinkComponents['schemas']['Workspace'];
       };
-      /** @description Erro de validação */
+      /** Erro de validação */
       400: {
         body: BlinkComponents['schemas']['ValidationError'];
       };
-      /** @description Não autenticado */
+      /** Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Não autorizado */
+      /** Não autorizado */
       403: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -511,23 +527,23 @@ export interface BlinkOperations {
   }>;
   'workspaces/get': HttpSchema.Method<{
     response: {
-      /** @description Workspace encontrado */
+      /** Workspace encontrado */
       200: {
         body: BlinkComponents['schemas']['Workspace'];
       };
-      /** @description Não autenticado */
+      /** Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Não autorizado */
+      /** Não autorizado */
       403: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Workspace não encontrado */
+      /** Workspace não encontrado */
       404: {
         body: BlinkComponents['schemas']['NotFoundError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -535,21 +551,21 @@ export interface BlinkOperations {
   }>;
   'workspaces/delete': HttpSchema.Method<{
     response: {
-      /** @description Workspace removido */
+      /** Workspace removido */
       204: {};
-      /** @description Não autenticado */
+      /** Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Não autorizado */
+      /** Não autorizado */
       403: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Workspace não encontrado */
+      /** Workspace não encontrado */
       404: {
         body: BlinkComponents['schemas']['NotFoundError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -558,32 +574,32 @@ export interface BlinkOperations {
   'workspaces/update': HttpSchema.Method<{
     request: {
       body: {
-        /** @description O nome do workspace */
+        /** O nome do workspace */
         name?: string;
       };
     };
     response: {
-      /** @description Workspace atualizado */
+      /** Workspace atualizado */
       200: {
         body: BlinkComponents['schemas']['Workspace'];
       };
-      /** @description Erro de validação */
+      /** Erro de validação */
       400: {
         body: BlinkComponents['schemas']['ValidationError'];
       };
-      /** @description Não autenticado */
+      /** Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Não autorizado */
+      /** Não autorizado */
       403: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Workspace não encontrado */
+      /** Workspace não encontrado */
       404: {
         body: BlinkComponents['schemas']['NotFoundError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -592,38 +608,41 @@ export interface BlinkOperations {
   'workspaces/members/list': HttpSchema.Method<{
     request: {
       searchParams: HttpSearchParamsSerialized<{
-        /** @description O nome do membro para filtrar */
+        /** O nome do membro para filtrar */
         name?: string;
-        /** @description O tipo do membro para filtrar */
+        /** O tipo do membro para filtrar */
         type?: BlinkComponents['schemas']['WorkspaceMemberType'];
-        /** @description O número da página */
+        /** O número da página */
         page?: number;
-        /** @description O número de membros por página */
+        /** O número de membros por página */
         limit?: number;
       }>;
     };
     response: {
-      /** @description Membros listados */
+      /** Membros listados */
       200: {
         body: {
           members: BlinkComponents['schemas']['WorkspaceMember'][];
-          /** @example 1 */
+          /**
+           * @example
+           *   1;
+           */
           total: number;
         };
       };
-      /** @description Não autenticado */
+      /** Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Não autorizado */
+      /** Não autorizado */
       403: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Workspace não encontrado */
+      /** Workspace não encontrado */
       404: {
         body: BlinkComponents['schemas']['NotFoundError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -637,31 +656,31 @@ export interface BlinkOperations {
       };
     };
     response: {
-      /** @description Membro adicionado */
+      /** Membro adicionado */
       201: {
         body: BlinkComponents['schemas']['WorkspaceMember'];
       };
-      /** @description Erro de validação */
+      /** Erro de validação */
       400: {
         body: BlinkComponents['schemas']['ValidationError'];
       };
-      /** @description Não autenticado */
+      /** Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Não autorizado */
+      /** Não autorizado */
       403: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Workspace não encontrado */
+      /** Workspace não encontrado */
       404: {
         body: BlinkComponents['schemas']['NotFoundError'];
       };
-      /** @description Usuário já é membro do workspace */
+      /** Usuário já é membro do workspace */
       409: {
         body: BlinkComponents['schemas']['ConflictError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -669,23 +688,23 @@ export interface BlinkOperations {
   }>;
   'workspaces/members/get': HttpSchema.Method<{
     response: {
-      /** @description Membro encontrado */
+      /** Membro encontrado */
       200: {
         body: BlinkComponents['schemas']['WorkspaceMember'];
       };
-      /** @description Não autenticado */
+      /** Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Não autorizado */
+      /** Não autorizado */
       403: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Membro não encontrado */
+      /** Membro não encontrado */
       404: {
         body: BlinkComponents['schemas']['NotFoundError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -698,27 +717,27 @@ export interface BlinkOperations {
       };
     };
     response: {
-      /** @description Membro atualizado */
+      /** Membro atualizado */
       200: {
         body: BlinkComponents['schemas']['WorkspaceMember'];
       };
-      /** @description Erro de validação */
+      /** Erro de validação */
       400: {
         body: BlinkComponents['schemas']['ValidationError'];
       };
-      /** @description Não autenticado */
+      /** Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Não autorizado */
+      /** Não autorizado */
       403: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Membro não encontrado */
+      /** Membro não encontrado */
       404: {
         body: BlinkComponents['schemas']['NotFoundError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -726,21 +745,21 @@ export interface BlinkOperations {
   }>;
   'workspaces/members/delete': HttpSchema.Method<{
     response: {
-      /** @description Membro removido */
+      /** Membro removido */
       204: {};
-      /** @description Não autenticado */
+      /** Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Não autorizado */
+      /** Não autorizado */
       403: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Membro não encontrado */
+      /** Membro não encontrado */
       404: {
         body: BlinkComponents['schemas']['NotFoundError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -749,36 +768,39 @@ export interface BlinkOperations {
   'workspaces/blinks/list': HttpSchema.Method<{
     request: {
       searchParams: HttpSearchParamsSerialized<{
-        /** @description O nome do blink para filtrar */
+        /** O nome do blink para filtrar */
         name?: string;
-        /** @description O número da página */
+        /** O número da página */
         page?: number;
-        /** @description O número de blinks por página */
+        /** O número de blinks por página */
         limit?: number;
       }>;
     };
     response: {
-      /** @description Blinks listados */
+      /** Blinks listados */
       200: {
         body: {
           blinks: BlinkComponents['schemas']['Blink'][];
-          /** @example 1 */
+          /**
+           * @example
+           *   1;
+           */
           total: number;
         };
       };
-      /** @description Não autenticado */
+      /** Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Não autorizado */
+      /** Não autorizado */
       403: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Workspace não encontrado */
+      /** Workspace não encontrado */
       404: {
         body: BlinkComponents['schemas']['NotFoundError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -787,40 +809,40 @@ export interface BlinkOperations {
   'workspaces/blinks/create': HttpSchema.Method<{
     request: {
       body: {
-        /** @description O nome do blink */
+        /** O nome do blink */
         name?: string;
-        /** @description A url do blink */
+        /** A url do blink */
         url: string;
-        /** @description O id do redirecionamento (se não fornecido, será gerado automaticamente) */
+        /** O id do redirecionamento (se não fornecido, será gerado automaticamente) */
         redirectId?: string;
       };
     };
     response: {
-      /** @description Blink criado */
+      /** Blink criado */
       201: {
         body: BlinkComponents['schemas']['Blink'];
       };
-      /** @description Erro de validação */
+      /** Erro de validação */
       400: {
         body: BlinkComponents['schemas']['ValidationError'];
       };
-      /** @description Não autenticado */
+      /** Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Não autorizado */
+      /** Não autorizado */
       403: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Workspace não encontrado */
+      /** Workspace não encontrado */
       404: {
         body: BlinkComponents['schemas']['NotFoundError'];
       };
-      /** @description Id de redirecionamento em uso por outro blink */
+      /** Id de redirecionamento em uso por outro blink */
       409: {
         body: BlinkComponents['schemas']['ConflictError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -828,23 +850,23 @@ export interface BlinkOperations {
   }>;
   'workspaces/blinks/get': HttpSchema.Method<{
     response: {
-      /** @description Blink encontrado */
+      /** Blink encontrado */
       200: {
         body: BlinkComponents['schemas']['Blink'];
       };
-      /** @description Não autenticado */
+      /** Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Não autorizado */
+      /** Não autorizado */
       403: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Workspace ou blink não encontrados */
+      /** Workspace ou blink não encontrados */
       404: {
         body: BlinkComponents['schemas']['NotFoundError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -852,21 +874,21 @@ export interface BlinkOperations {
   }>;
   'workspaces/blinks/delete': HttpSchema.Method<{
     response: {
-      /** @description Blink removido */
+      /** Blink removido */
       204: {};
-      /** @description Não autenticado */
+      /** Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Não autorizado */
+      /** Não autorizado */
       403: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Blink não encontrado */
+      /** Blink não encontrado */
       404: {
         body: BlinkComponents['schemas']['NotFoundError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -875,40 +897,40 @@ export interface BlinkOperations {
   'workspaces/blinks/update': HttpSchema.Method<{
     request: {
       body: {
-        /** @description O nome do blink */
+        /** O nome do blink */
         name?: string;
-        /** @description A url do blink */
+        /** A url do blink */
         url?: string;
-        /** @description O id do redirecionamento */
+        /** O id do redirecionamento */
         redirectId?: string;
       };
     };
     response: {
-      /** @description Blink atualizado */
+      /** Blink atualizado */
       200: {
         body: BlinkComponents['schemas']['Blink'];
       };
-      /** @description Erro de validação */
+      /** Erro de validação */
       400: {
         body: BlinkComponents['schemas']['ValidationError'];
       };
-      /** @description Não autenticado */
+      /** Não autenticado */
       401: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Não autorizado */
+      /** Não autorizado */
       403: {
         body: BlinkComponents['schemas']['AuthError'];
       };
-      /** @description Blink não encontrado */
+      /** Blink não encontrado */
       404: {
         body: BlinkComponents['schemas']['NotFoundError'];
       };
-      /** @description Id de redirecionamento em uso por outro blink */
+      /** Id de redirecionamento em uso por outro blink */
       409: {
         body: BlinkComponents['schemas']['ConflictError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };
@@ -916,18 +938,18 @@ export interface BlinkOperations {
   }>;
   redirect: HttpSchema.Method<{
     response: {
-      /** @description Redirecionamento */
+      /** Redirecionamento */
       308: {
         headers: HttpHeadersSerialized<{
           location?: string;
           'cache-control'?: string;
         }>;
       };
-      /** @description Redirecionamento não encontrado */
+      /** Redirecionamento não encontrado */
       404: {
         body: BlinkComponents['schemas']['NotFoundError'];
       };
-      /** @description Erro no servidor */
+      /** Erro no servidor */
       500: {
         body: BlinkComponents['schemas']['InternalServerError'];
       };

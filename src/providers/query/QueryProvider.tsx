@@ -10,6 +10,7 @@ export const DEFAULT_RETRY_COUNT = 3;
 
 type Props = PropsWithChildren;
 
+/** Provedor de contexto de queries e responsável por configurar o @tanstack/query client na aplicação. */
 function QueryProvider({ children }: Props) {
   const defaultQueryRetry = useCallback((failureCount: number, error: unknown) => {
     const isKnownError =

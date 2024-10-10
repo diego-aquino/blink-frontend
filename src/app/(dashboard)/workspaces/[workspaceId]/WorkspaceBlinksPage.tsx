@@ -12,6 +12,7 @@ import WorkspaceContentHeader from './layout/WorkspaceContentHeader';
 import WorkspaceContentLoading from './layout/WorkspaceContentLoading';
 import WorkspaceContentLoadingMore from './layout/WorkspaceContentLoadingMore';
 
+/** Página que lista os links de uma área de trabalho. */
 function WorkspaceBlinksPage() {
   const { workspaceId } = useWorkspaceParams();
   const blinks = useBlinks(workspaceId);

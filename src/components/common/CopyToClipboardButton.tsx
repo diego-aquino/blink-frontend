@@ -16,6 +16,7 @@ interface Props extends Omit<ButtonProps, 'children'> {
   text: string;
 }
 
+/** Botão que copia um texto para a área de transferência. */
 function CopyToClipboardButton({ text, ...rest }: Props) {
   const [showCopiedIcon, setShowCopiedIcon] = useState(false);
 

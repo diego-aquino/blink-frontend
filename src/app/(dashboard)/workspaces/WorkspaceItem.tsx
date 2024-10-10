@@ -6,6 +6,7 @@ interface Props {
   workspace: Workspace;
 }
 
+/** Componente representando um workspace na lista de workspaces. */
 function WorkspaceItem({ workspace }: Props) {
   return (
     <Link

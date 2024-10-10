@@ -15,6 +15,7 @@ interface Props {
   crumbs: Crumb[];
 }
 
+/** Componente de "migalhas" do cabeçalho do dashboard, para mostrar a localização atual do usuário. */
 function DashboardHeaderBreadCrumbs({ crumbs }: Props) {
   return (
     <div className="flex items-center space-x-1">
